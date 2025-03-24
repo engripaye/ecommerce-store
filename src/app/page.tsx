@@ -1,7 +1,19 @@
-import Image from "next/image";
+import { getCurrentSession } from "@/actions/auth";
+import { getAllProducts } from "@/sanity/lib/client";
 
-export default function Home() {
+
+const Home = async () => {
+
+const { user } = await getCurrentSession();
+
+const products = await getAllProducts();
   return (
-   <div>HOME</div>
+   <div>
+    {JSON.stringify(products)}
+
+   </div>
   );
 }
+
+export default Home;
+
