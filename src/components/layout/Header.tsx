@@ -22,9 +22,10 @@ const AnnouncementBar = () => {
 
 type HeaderProps = {
     user: Omit<User, 'passwordHash'> | null;
+    categorySelector: React.ReactNode
 
 }
-const Header = ({ user } : HeaderProps) => {
+const Header = ({ user, categorySelector } : HeaderProps) => {
     const router = useRouter();
     const [isOpen, setIsOpen] = useState<boolean>(true);
     const [prevScrollY, setPrevScrollY] = useState<number>(0);
@@ -66,6 +67,7 @@ const Header = ({ user } : HeaderProps) => {
                         <nav className='hidden md:flex gap-4 lg:gap-6 text-sm font-medium'>
                             <Link href='#'>Shop</Link>
                             <Link href='#'>New Arrival</Link>
+                            {categorySelector}
                             <Link href='#'>Sale</Link>
 
                         </nav>
