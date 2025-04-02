@@ -19,4 +19,28 @@ model User {
   email        String    @unique
   passwordHash String
   sessions     Session[]
+  cart Cart?
+}
+
+model CartLineItem {
+  id String @id
+  sanityProductId String
+  quantity Int
+
+  title String
+  price Float 
+  Image String
+
+  cartId String
+  cart Cart @relation(references: [id], fields: [cartId], onDelete: Cascade)
+
+}
+
+model Cart {
+  id String @id
+
+  userId Int? @unique
+  user User? @relation(references: [id], fields: [userId], onDelete: Cascade)
+
+  items CartLineItem[]
 }

@@ -1,4 +1,6 @@
 import SalesCampaignBanner from '@/components/layout/SalesCampaignBanner';
+import AddToCartButton from '@/components/product/AddToCartButton';
+import { formatPrice } from '@/lib/utils';
 import { getProductById } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import { ChevronRight, Home } from 'lucide-react';
@@ -95,7 +97,7 @@ const ProductPage = async ( { params } : {params: Promise<{id: string }>} ) => {
 
         {/* Product Details */}
         <div className='container mx-auto py-8'>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-8 '>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
             
             {/* Product Image */}
             {product.image && (
@@ -104,7 +106,7 @@ const ProductPage = async ( { params } : {params: Promise<{id: string }>} ) => {
                     <Image 
                             fill
                             priority
-                            className='object-color hover:scale-105 transistion-transform duration-300'
+                            className='object-cover hover:scale-105 transition-transform duration-300'
                             alt={product.title ?? 'Product Image'}
                             src={urlFor(product.image).url()}
                     />
@@ -121,6 +123,79 @@ const ProductPage = async ( { params } : {params: Promise<{id: string }>} ) => {
                     {product.title}
 
                 </h1>
+
+                <p className='text-gray-600'>
+                    {product.description}
+                </p>
+
+                {/*price section*/}
+
+                <div className='flex flex-col gap-2 mt-4'>
+                    <div className='flex items-center gap-3'>
+                        <div className='flex items-baseline gap-1'>
+                            <span className='text-xs font-bold text-red-600'>US</span>
+                            <span className='text-5xl font-black text-red-600 tracking-tight'>
+                                {formatPrice(product.price).replace('$', '')}
+                            </span>
+                        </div>
+                        <div className='flex flex-col'>
+                            <span className='text-lg text-gray-400 line-through decoration-red-500/50 decoration-2'>
+                                {formatPrice(originalPrice)}
+                            </span>
+                        <div className='flex items-center gap-2'>
+                            <span className='bg-red-600 text-white px-2 py-0.5 rounded text-sm font-bold animate-pulse'>
+                                -80%
+                            </span>
+                            <span className='text-red-600 font-bold text-sm'>
+                                MEGA SAVINGS
+                            </span>
+                        </div>
+                        </div>
+
+                    </div>
+
+                    <div className='flex items-center gap-2 bg-red-500 p-2 rounded-lg '>
+                        <span className='text-red-600 font-bold'>💰</span>
+                        <span className='text-red-600 font-medium text-sm'>
+                            You save {formatPrice(originalPrice - product.price)}
+                        </span>
+                    </div>
+
+                    <div className='flex items-center gap-2 text-xs text-gray-600'>
+                        <span className='inline-block w-2 h-2c bg-green-500 rounded-full animate-pulse'></span>
+                        <span>{Math.floor(Math.random() * 50) + 20} people bought in the last hour</span>
+
+                    </div>
+                </div>
+                <div className='bg-gradient-to-r from-yellow-500/20 to-yellow-600/20 p-4 rounded-xl mt-4'>
+                <div className='flex items-center gap-2 text-yellow-800 '>
+                    <span className='text-xl'>⚡q</span>
+                    <span className='font-bold'>Limited Time Offer!</span>
+                </div>
+                <div className='text-sm text-yellow-700 mt-1 font-medium'>
+                    Order now before price changes!
+                </div>
+                </div>
+
+                <AddToCartButton product={product} />
+                <div className='flex flex-col gap-3 mt-6 text-sm bg-white p-4 rounded-xl shadow-sm border border-gray-100 '>
+                    <div className='flex items-center gap-3 text-gray-700'>
+                        <span className='bg-green-100 p-2 rounded-full'>✅</span>
+                        <span className='font-medium'>In stock - Ships within 24hours</span>
+
+                    </div>
+                    <div className='flex items-center gap-3 text-gray-700'>
+                        <span className='bg-green-100 p-2 rounded-full'>↩️</span>
+                        <span className='font-medium'>30-day money-back guarantee</span>
+
+                    </div>
+                    <div className='flex items-center gap-3 text-gray-700'>
+                        <span className='bg-green-100 p-2 rounded-full'>🛡️</span>
+                        <span className='font-medium'>Secure payment processing</span>
+
+                    </div>
+
+                </div>
             </div>
             </div>
         </div>
