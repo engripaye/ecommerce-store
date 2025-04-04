@@ -1,3 +1,4 @@
+import { getOrCreateCart, syncCartWithUser, updateCartItem } from '@/actions/cart-action';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 export type CartItem = {
@@ -151,10 +152,10 @@ export const useCartStore = create<CartStore>() (
             
             
         
-        (
+        {
             name: 'cart-storage',
             skipHydration: true,
 
-        )
+        }
     )
 );
